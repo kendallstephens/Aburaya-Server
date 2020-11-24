@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
-    
+    # skip_before_action :authorized, only: [:create]
+
     def index
         items = Item.all
         render json: items

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    # skip_before_action :authorized, only: [:create]
 
     def index 
         users = User.all
@@ -17,16 +18,16 @@ class UsersController < ApplicationController
     end
   end
 
-    def auto_login
-        render json: user
+    def profile
+        render json: @user
      end
 
-    def show
+     def destroy
         user = User.find(params[:id])
-        render json: user
-     end 
+        user.destroy
+    end
 
-
+  
     private
 
     def user_params

@@ -1,5 +1,5 @@
 class OrderItemsController < ApplicationController
-    skip_before_action :authorized, only: [:index, :create]
+    skip_before_action :authorized, only: [:index, :create, :destroy]
 
     def index 
         order_items = OrderItem.all
@@ -10,6 +10,12 @@ class OrderItemsController < ApplicationController
         order_item = OrderItem.create(order_item_params)
         render json: order_item
     end
+
+    def destroy
+        order_item = OrderItem.find(params[:id])
+        order_item.destroy
+        render json: order_item
+      end
 
     private
 

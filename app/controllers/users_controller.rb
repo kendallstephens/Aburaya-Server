@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     if user.valid?
         payload = {user_id: user.id}
         token = encode_token(payload)
-        render json: {user: user, token: token}
+        render json: {user: UserSerializer.new(user), token: token}
     else
         render json: {error: "Invalid username or password"}, status: :not_acceptable
     end

@@ -8,7 +8,6 @@ class OrderItemsController < ApplicationController
 
      def create
         order_item = OrderItem.create(order_item_params)
-        byebug
         # order_item.errors.full_messages
         render json: order_item
     end

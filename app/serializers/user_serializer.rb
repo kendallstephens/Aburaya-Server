@@ -1,6 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :first_name, :last_name, :email, :phone_number, :orders, :order_items
   # has_many :order_items
+ 
 
 
   def orders

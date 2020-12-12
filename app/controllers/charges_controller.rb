@@ -1,32 +1,18 @@
 class ChargesController < ApplicationController
     skip_before_action :authorized, only: [:create]
 
-    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
-
-    def new 
-    end
-
     def create
-        # Amount in cents
-        @amount = 500
-      
-        customer = Stripe::Customer.create({
-          email: params[:stripeEmail],
-          source: params[:stripeToken],
-        })
-      
-        charge = Stripe::Charge.create({
-          customer: customer.id,
-          amount: @amount,
-          description: 'Rails Stripe customer',
+      Stripe.api_key = ENV['stripe_api_key']
+
+      find_items = User.all.filter{|user| user.id === params[:checkout_user_id] }
+      items = find_items.map{ |user| user.items}
+      amount = items.map{|item| item.price}.sum * 100
+     
+      intent = Stripe::PaymentIntent.create({
+          amount: amount.to_i,
           currency: 'usd',
-        #   :source => params[:token]
+          metadata: {integration_check: 'accept_a_payment'},
         })
-      
-    #   rescue Stripe::CardError => e
-    #     flash[:error] = e.message
-    #     redirect_to new_charge_path
-    #   end
-    end
-  
+        render json: {client_secret: intent.client_secret}
+  end
 end

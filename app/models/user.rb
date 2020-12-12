@@ -13,15 +13,4 @@ class User < ApplicationRecord
       end
     end
 
-    # def current_cart
-    #   self.order_items.select do |i|
-    #     i[:order_id] == order[:id]
-    #   end
-    # end
-
-    # def paid_orders
-    #     self.orders.select do |o|
-    #       o.complete == true
-    #   end 
-    # end
 end

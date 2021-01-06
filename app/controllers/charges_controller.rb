@@ -6,13 +6,15 @@ class ChargesController < ApplicationController
 
 
     def create
-      byebug
    
       Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
-      find_items = User.all.filter{|user| user.id === params[:checkout_user_id] }
-      items = find_items.map{ |user| user.items}
-      amount = 5 * 100
+      # user = User.all.filter{|user| user.id === params[:checkout_user_id] }
+      current_user = params[:checkout_user_id]
+      # find_order = Order.all.filter{|order| order.user_id === params[:checkout_user_id] }
+      # amount = find_user.map{|user| user.order_items.item.price}.sum * 100
+      # amount = 5 * 100
+      amount = params[:amount] * 100
       payment_method = params[:payment_method]
      
       intent = Stripe::PaymentIntent.create({
